@@ -1,0 +1,31 @@
+
+Part 1
+
+Answers: 
+Spearman correlation using Path Similarity: 0.4291
+Spearman correlation using Wu-Palmer Similarity: 0.5309
+
+Coverage: 201/203
+
+
+My approach here was very basic. I used the first synset delivered for each word. Originally I wanted to wrap everything in a function that I could call for each method, but discovered that the methods needed different arguments.
+
+Running Path Similarity and Wu-Palmer went off without a hitch and I got the Spearman Rhos listed above. However with the other methods, even when defining an IC argument as required, I got the same error in each case that I wasn't able to resolve: computing the least common subsumer requires the synsets being compared to have the same part of speech. I can imagine a way of ensuring that this error doesn't throw, but I ran out of time.
+
+As for coverage, I was confused by the meaning of a similarity method returning "None". This was true only in two cases, and in order to compute the Spearman Rhos I just removed the similarity score and the corresponding human score from the calculation. But there were no words that did not have a WordNet synset, so I would have thought coverage was actually 203/203.
+
+
+Part 2
+
+I made several painful but instructive mistakes on this part. 
+
+My initial difficulty was in figuring out how to be sure that my tokenizing script would run to the end of the document and stop; i.e., I knew it should take a while to tokenize such a long file, but I wasn't sure how to distinguish a long process from an infinite one. I experimented with a shorter file until I was sure my script had not created an infinite loop.
+
+However, after doing that and letting it run, I realized I was making a few major mistakes:
+I was reading the entire file in at once, I was saving the tokenized data into a variable rather than writing it into a file, and I had unnecessarily also scripted a process for counting instances of each type into a dictionary.
+
+I realized and solved these flaws in my approach successively. I ultimately came up with a very neat 11-line script for reading in the file line by line, parsing bigrams, and appending each bigram, separated by tab, into a text file.
+
+I am extremely proud of the output and feel triumphant, even though I have now come to realize it is not even remotely close to what I need to run the ppmi script. Now I see that the ppmi script uses the concept of a window, which makes me think I need a tokenized file of words and word parts (and punctuation?) just separated by spaces.
+
+Accordingly, where I interpreted from the instructions that I needed two columns of tokenized news data, I actually need to turn the word pairs file into two columns.
